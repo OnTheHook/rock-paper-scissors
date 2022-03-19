@@ -4,53 +4,79 @@ function computerPlay() {
     return choice[num];
 }
 
-let computerSelection = computerPlay();
+function playRound(playerSelection, computerSelection) {
+    if (computerSelection === 'Rock') {
+        switch (playerSelection) {
+            case 'Rock':
+                return 'Tie';
+            case 'Paper':
+                return 'Player';
+            case 'Scissors':
+                return 'Computer';
+            default:
+                return 'Invalid input';
+        }
 
-let playerSelection = prompt('Enter "Rock", "Paper", or "Scissors": ');
-playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase();
+    } else if (computerSelection == 'Paper') {
+        switch (playerSelection) {
+            case 'Rock':
+                return 'Computer';
+            case 'Paper':
+                return 'Tie';
+            case 'Scissors':
+                return 'Player';
+            default:
+                return 'Invalid input';
+        }
+    } else {
+        switch (playerSelection) {
+            case 'Rock':
+                return 'Player';
+            case 'Paper':
+                return 'Computer';
+            case 'Scissors':
+                return 'Tie';
+            default:
+                return 'Invalid input';
+        }
 
-if (computerSelection === 'Rock') {
-    switch (playerSelection) {
-        case 'Rock':
-            console.log('Tie! Rock ties Rock');
-            break;
-        case 'Paper':
-            console.log('You win! Paper beats Rock');
-            break;
-        case 'Scissors':
-            console.log('You lose! Rock beats scissors');
-            break;
-        default:
-            console.log('Invalid input');
     }
-
-} else if (computerSelection == 'Paper') {
-    switch (playerSelection) {
-        case 'Rock':
-            console.log('You lose! Paper beats Rock');
-            break;
-        case 'Paper':
-            console.log('You tie! Paper ties Paper');
-            break;
-        case 'Scissors':
-            console.log('You win! Scissors beats Paper');
-            break;
-        default:
-            console.log('Invalid input');
-    }
-} else {
-    switch (playerSelection) {
-        case 'Rock':
-            console.log('You win! Rock beats Scissors');
-            break;
-        case 'Paper':
-            console.log('You lose! Scissors beats Paper');
-            break;
-        case 'Scissors':
-            console.log('You tie! Scissors ties Scissors');
-            break;
-        default:
-            console.log('Invalid input');
-    }
-
 }
+
+
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    let computer;
+    let player;
+
+    for (let i = 0; i < 5; i++) {
+        computer = computerPlay();
+        player = prompt('Enter "Rock", "Paper", or "Scissors": ');
+        player = player[0].toUpperCase() + player.slice(1).toLowerCase();
+        winner = playRound(player, computer);
+        if (winner === 'Player') {
+            playerScore++;
+            console.log(`You win! ${player} beats ${computer}`)
+        } else if (winner === 'Computer') {
+            computerScore++;
+            console.log(`You lose! ${computer} beats ${player}`)
+        } else if (winner === 'Tie') {
+            console.log('Tie');
+        } else {
+            console.log('Invalid input');
+        }
+    }
+    if (playerScore > computerScore) {
+        console.log('You win the game!');
+        console.log(`Your score: ${playerScore}. Computer score: ${computerScore}.`);
+    } else if (computerScore > playerScore) {
+        console.log('You lose the game!');
+        console.log(`Your score: ${playerScore}. Computer score: ${computerScore}.`);
+    } else {
+        console.log('The game is tied!');
+        console.log(`Your score: ${playerScore}. Computer score: ${computerScore}.`);
+    }
+}
+
+game();
