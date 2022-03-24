@@ -1,3 +1,8 @@
+let playerScore = 0;
+let computerScore = 0;
+let result;
+
+
 function computerPlay() {
     let num = Math.floor(Math.random() * 3);
     const choice = ['Rock', 'Paper', 'Scissors'];
@@ -43,40 +48,41 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
+function getInput(e) {
+    result = playRound(this.id, computerPlay());
+    checkWinner(result);
+    e.stopPropagation();
+}
 
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    let computer;
-    let player;
+function checkWinner(winner) {
 
-    for (let i = 0; i < 5; i++) {
-        computer = computerPlay();
-        player = prompt('Enter "Rock", "Paper", or "Scissors": ');
-        player = player[0].toUpperCase() + player.slice(1).toLowerCase();
-        winner = playRound(player, computer);
-        if (winner === 'Player') {
-            playerScore++;
-            console.log(`You win! ${player} beats ${computer}`)
-        } else if (winner === 'Computer') {
-            computerScore++;
-            console.log(`You lose! ${computer} beats ${player}`)
-        } else if (winner === 'Tie') {
-            console.log('Tie');
-        } else {
-            console.log('Invalid input');
-        }
+    if (winner === 'Player') {
+        playerScore++;
+    } else if (winner === 'Computer') {
+        computerScore++;
     }
-    if (playerScore > computerScore) {
-        console.log('You win the game!');
-        console.log(`Your score: ${playerScore}. Computer score: ${computerScore}.`);
-    } else if (computerScore > playerScore) {
-        console.log('You lose the game!');
-        console.log(`Your score: ${playerScore}. Computer score: ${computerScore}.`);
-    } else {
-        console.log('The game is tied!');
-        console.log(`Your score: ${playerScore}. Computer score: ${computerScore}.`);
+    console.log(playerScore)
+    console.log(computerScore)
+    if (playerScore >= 5) {
+        console.log('Player wins!');
+        rock.removeEventListener('click', getInput);
+        paper.removeEventListener('click', getInput);
+        scissors.removeEventListener('click', getInput);
+
+    } else if (computerScore >= 5) {
+        console.log('Computer wins!');
+        rock.removeEventListener('click', getInput);
+        paper.removeEventListener('click', getInput);
+        scissors.removeEventListener('click', getInput);
     }
 }
 
-game();
+const rock = document.querySelector('#Rock');
+const paper = document.querySelector('#Paper');
+const scissors = document.querySelector('#Scissors');
+
+rock.addEventListener('click', getInput);
+paper.addEventListener('click', getInput);
+scissors.addEventListener('click', getInput);
+
+
